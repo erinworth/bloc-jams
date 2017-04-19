@@ -82,9 +82,10 @@ var setCurrentAlbum = function(album) {
      var albums = [albumPicasso, albumMarconi, albumWillow];
      var index = 1;
      albumImage.addEventListener("click", function(event){
-            setCurrentAlbum(albums[index]);  
+         console.log('click');   
+         setCurrentAlbum(albums[index]);  
             index++;
-            (if index == albums.length){
+            if (index == albums.length){
                 index = 0;
             }
     });
