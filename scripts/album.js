@@ -1,4 +1,3 @@
-
 var setSong = function(songNumber){
     if (currentSoundFile) {
          currentSoundFile.stop();
@@ -64,7 +63,6 @@ var getSongNumberCell = function(number) {
             }
 	       }
         };
-
 
         var onHover = function(event) {
         var songNumberCell = $(this).find('.song-item-number');
@@ -136,8 +134,6 @@ var nextSong = function() {
       currentSongIndex = 0;
   }
 
-  var lastSongNumber = currentlyPlayingSongNumber;
-
        setSong(currentSongIndex + 1);
        currentSoundFile.play();
        updatePlayerBarSong();
@@ -207,11 +203,11 @@ var togglePlayFromPlayerBar = function(){
   var currentlyPlayingCell = getSongNumberCell(currentlyPlayingSongNumber);
 
   if (currentSoundFile.isPaused()){
-    (currentlyPlayingCell.hmtl(pausedButtonTemplate));
-    $('.main-controls .playpause').hmtl(playerBarPauseButton);
+    (currentlyPlayingCell.html(pausedButtonTemplate));
+    $('.main-controls .playpause').html(playerBarPauseButton);
     currentSoundFile.play();
   } else if (currentSoundFile !== null) {
-    (currentlyPlayingCell.hmtl(playButtonTemplate));
+    (currentlyPlayingCell.html(playButtonTemplate));
     $(' .main-contols .play-pause').html(playerBarPlayButton);
 
     currentSoundFile.pause();
