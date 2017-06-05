@@ -1,23 +1,24 @@
-var setSong = function(songNumber){
+var setSong = function(songNumber) {
     if (currentSoundFile) {
-         currentSoundFile.stop();
-     }
+        currentSoundFile.stop();
+    }
 
     currentlyPlayingSongNumber = parseInt(songNumber);
-    currentSongFromAlbum = currentAlbum.songs[songNumber-1];
+    currentSongFromAlbum = currentAlbum.songs[songNumber - 1];
+
     currentSoundFile = new buzz.sound(currentSongFromAlbum.audioUrl, {
-        // #2
         formats: [ 'mp3' ],
         preload: true
-    });
 
-    var seek = function(time) {
-    if (currentSoundFile) {
-        currentSoundFile.setTime(time);
-    }
-}
+    });
     setVolume(currentVolume);
 };
+
+var seek = function(time) {
+     if (currentSoundFile) {
+         currentSoundFile.setTime(time);
+     }
+ }
 
 var setVolume = function(volume) {
      if (currentSoundFile) {
@@ -179,40 +180,30 @@ var setupSeekBars = function() {
     var $seekBars = $('.player-bar .seek-bar');
 
     $seekBars.click(function(event) {
-        // #3
-        var offsetX = event.pageX - $(this).offset().left;
-        var barWidth = $(this).width();
-        // #4
-        var seekBarFillRatio = offsetX / barWidth;
+    var offsetX = event.pageX - $(this).offset().left;
+    var barWidth = $(this).width();
+    var seekBarFillRatio = offsetX / barWidth;
 
-        // #5
-        if (currentSoundFile === null) {
-                     return;
-                 }
+    if ($(this).parent().attr('class') == 'seek-control') {
+        seek(seekBarFillRatio * currentSoundFile.getDuration());
+    } else {
+        setVolume(seekBarFillRatio * 100);
+    }
 
-        if ($(this).parent().attr('class') == 'seek-control') {
-                seek(seekBarFillRatio * currentSoundFile.getDuration());
-        } else {
-                setVolume(seekBarFillRatio * 100);
-        }
+    updateSeekPercentage($(this), seekBarFillRatio);
+});
 
+$seekBars.find('.thumb').mousedown(function(event) {
 
-        updateSeekPercentage($(this), seekBarFillRatio);
-    });
-
-
-    $seekBars.find('.thumb').mousedown(function(event) {
-    // #8
     var $seekBar = $(this).parent();
 
-    // #9
     $(document).bind('mousemove.thumb', function(event){
         var offsetX = event.pageX - $seekBar.offset().left;
         var barWidth = $seekBar.width();
         var seekBarFillRatio = offsetX / barWidth;
 
         if ($seekBar.parent().attr('class') == 'seek-control') {
-          seek(seekBarFillRatio * currentSoundFile.getDuration());
+            seek(seekBarFillRatio * currentSoundFile.getDuration());
         } else {
             setVolume(seekBarFillRatio);
         }
